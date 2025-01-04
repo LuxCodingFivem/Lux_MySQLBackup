@@ -2,7 +2,7 @@
 Simple MySQL Backup with Python for Windows
 
 # Installtion 
-1. Download Ping over Port.py
+1. Download Lux_MySQLBackup.py
 2. Open Python file and edit the Translation in line 16 
 3. Edit Date Format in line 19
 4. Add Hostname, Username and Password in line 111
