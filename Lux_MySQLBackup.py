@@ -1,6 +1,5 @@
 """
-My Python Script
-
+Lux_MySQLBackup
 Copyright (c) 2024 LuxCoding
 
 This script is licensed under the MIT License.
