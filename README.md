@@ -1,7 +1,7 @@
-#Lux_MySQLBackup
+# Lux_MySQLBackup
 Simple MySQL Backup with Python for Windows
 
-#Installation
+# Installation
 1. Download all files.
 2. Open a terminal.
 3. Install customtkinter by using the following command: "pip install customtkinter".
@@ -17,7 +17,7 @@ Simple MySQL Backup with Python for Windows
 13. In the "Arguments" field, paste: -command "python '[path to Lux_MySQLBackup.py file]'"
 14. Hit save.
 
-#FAQ
+# FAQ
 Q: How can I add another language?
 A: Simply open the Language.json and copy, for example, the English part. Then rename it to your desired language and translate the texts.
 
