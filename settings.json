@@ -1,0 +1,20 @@
+{
+    "hostname": "localhost",
+    "database_user": "root",
+    "database_password": "root",
+    "language": "English",
+    "date_format": "%m.%d.%Y_%H.%M.%S",
+    "backup_path": "",
+    "backup_count": "",
+    "mysql_exe_path": "C:/Program Files/MariaDB 11.6/bin/mysql.exe",
+    "mysql_dump_exe_path": "C:/Program Files/MariaDB 11.6/bin/mysqldump.exe",
+    "background_theme": "System",
+    "theme_color": "Blue",
+    "databases": {
+        "information_schema": false,
+        "mysql": false,
+        "performance_schema": false,
+        "sys": false,
+        "trest": false
+    }
+}
