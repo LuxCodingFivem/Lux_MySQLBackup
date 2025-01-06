@@ -1,22 +1,33 @@
-# Lux_MySQLBackup
+#Lux_MySQLBackup
 Simple MySQL Backup with Python for Windows
 
-# Installtion 
-1. Download Lux_MySQLBackup.py
-2. Open Python file and edit the Translation in line 16 
-3. Edit Date Format in line 19
-4. Add Hostname, Username and Password in line 111
-5. Define Backup Folder  and how many Backups sould be saved in line 116
-6. Define MySQL and MySQL Dump Path in line 120 (In my case i use MariaDB 11.5 there will the path be filled in by default)
-7. Define the Databases that sould exlude in line 124
-8. Place the File in eg. C:\Backup
-9. Open the Windows Taskplaner
-10. Create an Simple New task and Define a Name
-11. Define how often the Backup sould be run
-12. By Action tab you couse Start Programm
-13. In Field Progreem use the Path to the Prowershell.exe (by default C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe)
-14. In Fíeld Arguments Paste: -command "python '[path to Lux_MySQLBackup.py File]'"
-15. Hit save
+#Installation
+1. Download all files.
+2. Open a terminal.
+3. Install customtkinter by using the following command: "pip install customtkinter".
+4. Place the files, e.g., in C:\Backup.
+5. Start GUI.py, fill in all values, and hit save.
+6. The GUI will reopen so you can choose the databases that should be backed up.
+7. After selecting the databases, hit save again and close the GUI.
+8. Open the Windows Task Scheduler.
+9. Create a new simple task and define a name.
+10. Define how often the backup should run.
+11. In the Action tab, choose "Start Program".
+12. In the "Program/script" field, use the path to powershell.exe (by default C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe).
+13. In the "Arguments" field, paste: -command "python '[path to Lux_MySQLBackup.py file]'"
+14. Hit save.
+
+#FAQ
+Q: How can I add another language?
+A: Simply open the Language.json and copy, for example, the English part. Then rename it to your desired language and translate the texts.
+
+Q: Where can I find the MySQL.exe and MySQLDump.exe?
+A: If you are using MariaDB, the executables should be in the following directory: "C:/Program Files/MariaDB xx.x/bin/". For other MySQL databases, the path may be different.
+
+Q: Why can't I select any databases?
+A: You need to set up the values in the General and Database Connection tabs first and hit save. After that, the GUI will reopen, and you can select your databases.
+
+
 
 # License 
 
