@@ -306,7 +306,7 @@ for idx, db in enumerate(databases):
 tabView.add(translate('theme'))
 
 # Backgroud Theme Input
-background_theme_label = customtkinter.CTkLabel(master=tabView.tab(translate('theme')), text=translate('backgroup_theme'))
+background_theme_label = customtkinter.CTkLabel(master=tabView.tab(translate('theme')), text=translate('background_theme'))
 background_theme_label.grid(row=0, column=0, padx=(10, 5), pady=10, sticky='w')
 
 background_theme_str_var = customtkinter.StringVar(value=config.get('background_theme'))
