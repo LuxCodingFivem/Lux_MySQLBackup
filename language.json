@@ -25,7 +25,8 @@
         "background_theme": "Hintergrund-Design:",
         "theme_color": "Design-Farbe:",
         "save": "Speichern",
-        "choose_databases_to_backup": "Wähle welche Datenbanken ins Backup aufgenommen werden sollen."
+        "choose_databases_to_backup": "Wähle welche Datenbanken ins Backup aufgenommen werden sollen.",
+        "no_databases": "Es stehen keine Datenbanken zur Verfügung. Führe die Einstellungen durch, um eine Verbindung zu deiner Datenbank aufzubauen."
     },
     "English": {
         "error_reqest_database": "Error retrieving databases: {utf8}",
@@ -53,7 +54,9 @@
         "background_theme": "Background theme:",
         "theme_color": "Theme color:",
         "save": "Save",
-        "choose_databases_to_backup": "Choose which databases should be included in the backup."
+        "choose_databases_to_backup": "Choose which databases should be included in the backup.",
+        "no_databases": "No databases are available. Complete the settings to establish a connection to your database."
+
     },
     "Español": {
         "error_reqest_database": "Error al recuperar las bases de datos: {utf8}",
@@ -81,7 +84,8 @@
         "background_theme": "Tema de fondo:",
         "theme_color": "Color del tema:",
         "save": "Guardar",
-        "choose_databases_to_backup": "Elige qué bases de datos deben incluirse en la copia de seguridad."
+        "choose_databases_to_backup": "Elige qué bases de datos deben incluirse en la copia de seguridad.",
+        "no_databases": "No hay bases de datos disponibles. Configura los ajustes para establecer una conexión con tu base de datos."
     },
     "Français": {
         "error_reqest_database": "Erreur lors de la récupération des bases de données : {utf8}",
@@ -109,7 +113,8 @@
         "background_theme": "Thème de fond :",
         "theme_color": "Couleur du thème :",
         "save": "Sauvegarder",
-        "choose_databases_to_backup": "Choisissez les bases de données à inclure dans la sauvegarde."
+        "choose_databases_to_backup": "Choisissez les bases de données à inclure dans la sauvegarde.",
+        "no_databases": "Aucune base de données disponible. Complétez les paramètres pour établir une connexion à votre base de données."
     },
     "Italiano": {
         "error_reqest_database": "Errore durante il recupero dei database: {utf8}",
@@ -137,7 +142,8 @@
         "background_theme": "Tema di sfondo:",
         "theme_color": "Colore del tema:",
         "save": "Salva",
-        "choose_databases_to_backup": "Scegli quali database devono essere inclusi nel backup."
+        "choose_databases_to_backup": "Scegli quali database devono essere inclusi nel backup.",
+        "no_databases": "Non ci sono database disponibili. Completa le impostazioni per stabilire una connessione al tuo database."
     },
     "Português": {
         "error_reqest_database": "Erro ao recuperar os bancos de dados: {utf8}",
@@ -165,7 +171,8 @@
         "background_theme": "Tema de fundo:",
         "theme_color": "Cor do tema:",
         "save": "Salvar",
-        "choose_databases_to_backup": "Escolha quais bancos de dados devem ser incluídos no backup."
+        "choose_databases_to_backup": "Escolha quais bancos de dados devem ser incluídos no backup.",
+        "no_databases": "Nenhum banco de dados disponível. Conclua as configurações para estabelecer uma conexão com seu banco de dados."
     },
     "中文": {
         "error_reqest_database": "检索数据库时出错：{utf8}",
@@ -193,7 +200,8 @@
         "background_theme": "背景主题：",
         "theme_color": "主题颜色：",
         "save": "保存",
-        "choose_databases_to_backup": "选择哪些数据库应该包含在备份中。"
+        "choose_databases_to_backup": "选择哪些数据库应该包含在备份中。",
+        "no_databases": "没有可用的数据库。请完成设置以连接到您的数据库。"
     },
     "Русский": {
         "error_reqest_database": "Ошибка при получении баз данных: {utf8}",
@@ -221,7 +229,8 @@
         "background_theme": "Тема фона:",
         "theme_color": "Цвет темы:",
         "save": "Сохранить",
-        "choose_databases_to_backup": "Выберите, какие базы данных должны быть включены в резервную копию."
+        "choose_databases_to_backup": "Выберите, какие базы данных должны быть включены в резервную копию.",
+        "no_databases": "Нет доступных баз данных. Завершите настройки, чтобы установить соединение с вашей базой данных."
     },
     "Türkçe": {
         "error_reqest_database": "Veritabanları alınırken hata oluştu: {utf8}",
@@ -249,7 +258,8 @@
         "background_theme": "Arka Plan Teması:",
         "theme_color": "Tema Rengi:",
         "save": "Kaydet",
-        "choose_databases_to_backup": "Yedeklemeye dahil edilecek veritabanlarını seçin."
+        "choose_databases_to_backup": "Yedeklemeye dahil edilecek veritabanlarını seçin.",
+        "no_databases": "Kullanılabilir bir veritabanı yok. Veritabanınıza bağlanmak için ayarları tamamlayın."
     },
     "Nederlands": {
         "error_reqest_database": "Fout bij het ophalen van databases: {utf8}",
@@ -277,6 +287,7 @@
         "background_theme": "Achtergrondthema:",
         "theme_color": "Themakleur:",
         "save": "Opslaan",
-        "choose_databases_to_backup": "Kies welke databases moeten worden opgenomen in de back-up."
+        "choose_databases_to_backup": "Kies welke databases moeten worden opgenomen in de back-up.",
+        "no_databases": "Er zijn geen databases beschikbaar. Voltooi de instellingen om verbinding te maken met uw database."
     }
 }

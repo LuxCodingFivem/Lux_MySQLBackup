@@ -159,21 +159,24 @@ def select_mysql_dump_exe_dir():
 
 # Funcstion to get all Databases
 def get_databases():
-    cmd = [
-        config.get('mysql_exe_path'),
-        '-h', config.get('hostname'),
-        '-u', config.get('database_password'),
-        f'--password={config.get('database_password')}',
-        '-e', 'SHOW DATABASES;'
-    ]
-    
-    result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    if result.returncode != 0:
-        print(translate('error_reqest_database', utf8=result.stderr.decode('utf-8')))
+    try:
+        cmd = [
+            config.get('mysql_exe_path'),
+            '-h', config.get('hostname'),
+            '-u', config.get('database_password'),
+            f'--password={config.get('database_password')}',
+            '-e', 'SHOW DATABASES;'
+        ]
+        
+        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        if result.returncode != 0:
+            print(translate('error_reqest_database', utf8=result.stderr.decode('utf-8')))
+            return []
+        
+        databases = result.stdout.decode('utf-8').splitlines()[1:]  
+        return databases
+    except:
         return []
-    
-    databases = result.stdout.decode('utf-8').splitlines()[1:]  
-    return databases
 
 # Save the Config and Translation in Varaibles
 config = load_config()
@@ -280,10 +283,14 @@ database_password_entry.grid(row=3, column=1, padx=(5, 10), pady=10, sticky='w')
 # Add Databases Tab to Tabview
 tabView.add(translate('databases'))
 
-select_databases_label = customtkinter.CTkLabel(master=tabView.tab(translate('databases')), text=translate('choose_databases_to_backup'))
+databases = get_databases()
+
+if databases == []:
+    select_databases_label = customtkinter.CTkLabel(master=tabView.tab(translate('databases')), text=translate('no_databases'))
+else:
+    select_databases_label = customtkinter.CTkLabel(master=tabView.tab(translate('databases')), text=translate('choose_databases_to_backup'))
 select_databases_label.grid(row=0, column=0, columnspan=2, pady=(10, 10), padx=10, sticky="nsew")
 
-databases = get_databases()
 for idx, db in enumerate(databases):
     label = customtkinter.CTkLabel(tabView.tab(translate('databases')), text=db, anchor="w")
     label.grid(row=idx + 1, column=0, padx=10, pady=5, sticky="w")
