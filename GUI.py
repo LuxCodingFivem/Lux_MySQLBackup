@@ -7,73 +7,30 @@ This script is licensed under the MIT License.
 For full details, see the LICENSE file in the repository.
 """
 # Import requiered Libs
-import json
+import os
+import subprocess
+import sys
 import customtkinter 
 import tkinter
 from tkinter import filedialog
-import os
-import subprocess
+from functions import encrypt
+from functions import decrypt
+from functions import load_config
+from functions import load_language
+from functions import translate
+from functions import save_config
+from functions import get_databases
+from functions import get_script_dir
 
 checkbox_vars = {}
 
 # Gets the curent Script Path and store it in a Variable
-script_dir = os.path.dirname(__file__)
+script_dir = get_script_dir()
 
 # Function to Restart GUI
 def restart_GUI():
-    app.destroy()  
-    os.startfile(os.path.join(script_dir, 'GUI.py'))
-
-# Function to load the Config File
-def load_config():
-    try:
-        with open(os.path.join(script_dir, 'settings.json'), 'r', encoding='utf-8') as f:
-            config = json.load(f)
-            return config
-    except FileNotFoundError:
-        print('File not fount')
-        return None
-    except json.JSONDecodeError as e:
-        print(f'Error by reading JSON-File: {e}')
-        return None
-
-# fucntion to load the Language 
-def load_language(language):
-    try:
-        with open(os.path.join(script_dir, 'language.json'), 'r', encoding='utf-8') as f:
-            data = json.load(f)  # JSON laden
-            languages = list(data.keys()) 
-            
-            language_data = data.get(language)
-            
-            if language_data is None:
-                print(f"the Language: '{language}' is not awaiable.")
-                return None, languages  
-            
-            return language_data, languages  
-    except FileNotFoundError:
-        print("File 'language.json' not found")
-        return None, []
-    except json.JSONDecodeError as e:
-        print(f'Error by Reading JSON-File: {e}')
-        return None, []
-
-# function to translate 
-def translate(key, **kwargs):
-    text = translation.get(key, key)  
-    try:
-        return text.format(**kwargs) 
-    except KeyError:
-        return text
-
-# function to save the Confing to the Config file
-def save_config(config):
-    try:
-        with open(os.path.join(script_dir, 'settings.json'), "w", encoding='utf-8') as f:
-            json.dump(config, f, indent=4)
-    except Exception as e:
-        print(translate('error_by_saving_config', e=e))
-        return None
+    app.destroy()
+    subprocess.Popen([sys.executable, os.path.join(script_dir, 'GUI.py')])
 
 # Function to save Configuration to Config File
 def save_settings():
@@ -86,9 +43,9 @@ def save_settings():
     config['mysql_dump_exe_path'] = mysql_dump_exe_entry.get()
 
     # Database Connection
-    config['database_user'] = database_user_entry.get()
-    config['database_password'] = database_password_entry.get()
-    config['hostname'] = hostname_entry.get()
+    config['database_user'] = encrypt(database_user_entry.get())
+    config['database_password'] = encrypt(database_password_entry.get())
+    config['hostname'] = encrypt(hostname_entry.get())
 
     # Databases
     config['databases'] = {}
@@ -126,13 +83,13 @@ def fill_in_values():
 
     # Database Connection
     hostname_entry.delete(0, customtkinter.END)
-    hostname_entry.insert(0, config.get('hostname'))
+    hostname_entry.insert(0, decrypt(config.get('hostname')))
 
     database_user_entry.delete(0, customtkinter.END)
-    database_user_entry.insert(0, config.get('database_user'))
+    database_user_entry.insert(0, decrypt(config.get('database_user')))
 
     database_password_entry.delete(0, customtkinter.END)
-    database_password_entry.insert(0, config.get('database_password'))
+    database_password_entry.insert(0, decrypt(config.get('database_password')))
 
     # Databases
     for db, value in config['databases'].items():
@@ -157,26 +114,7 @@ def select_mysql_dump_exe_dir():
     mysql_dump_exe_entry.delete(0, customtkinter.END)
     mysql_dump_exe_entry.insert(0, path)
 
-# Funcstion to get all Databases
-def get_databases():
-    try:
-        cmd = [
-            config.get('mysql_exe_path'),
-            '-h', config.get('hostname'),
-            '-u', config.get('database_password'),
-            f'--password={config.get('database_password')}',
-            '-e', 'SHOW DATABASES;'
-        ]
-        
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if result.returncode != 0:
-            print(translate('error_reqest_database', utf8=result.stderr.decode('utf-8')))
-            return []
-        
-        databases = result.stdout.decode('utf-8').splitlines()[1:]  
-        return databases
-    except:
-        return []
+
 
 # Save the Config and Translation in Varaibles
 config = load_config()
@@ -328,7 +266,3 @@ save_button.place(relx=0.5, rely=0.8, anchor=tkinter.CENTER)
 # start the fill in and open the GUI
 fill_in_values()
 app.mainloop()
-
-
-# Todo:
-#     - Rewrite README

@@ -8,53 +8,15 @@ For full details, see the LICENSE file in the repository.
 # Import requiered Libs
 import subprocess
 import os
-import json
 from datetime import datetime
+from functions import get_script_dir
+from functions import load_config
+from functions import load_language
+from functions import translate
+from functions import decrypt
 
 # Gets the curent Script Path and store it in a Variable
-script_dir = os.path.dirname(__file__)
-
-# Function to load the Config File
-def load_config():
-    try:
-        with open(os.path.join(script_dir, 'settings.json'), 'r', encoding='utf-8') as f:
-            config = json.load(f)
-            return config
-    except FileNotFoundError:
-        print("File 'settings.json' not found")
-        return None
-    except json.JSONDecodeError as e:
-        print(f'Error by Reading JSON-File: {e}')
-        return None
-
-# fucntion to load the Language 
-def load_language(language):
-    try:
-        with open(os.path.join(script_dir, 'language.json'), 'r', encoding='utf-8') as f:
-            data = json.load(f)  # JSON laden
-            languages = list(data.keys()) 
-            
-            language_data = data.get(language)
-            
-            if language_data is None:
-                print(f"the Language: '{language}' is not awaiable.")
-                return None
-            
-            return language_data
-    except FileNotFoundError:
-        print("File 'language.json' not found")
-        return None
-    except json.JSONDecodeError as e:
-        print(f'Error by Reading JSON-File: {e}')
-        return None
-
-# function to translate 
-def translate(key, **kwargs):
-    text = translation.get(key, key)  
-    try:
-        return text.format(**kwargs) 
-    except KeyError:
-        return text
+script_dir = get_script_dir()
 
 # Load Config and Translation
 config = load_config()
@@ -95,16 +57,16 @@ for db_name in databases:
         os.makedirs(db_backup_dir)
 
     # Creates File name with current date
-    current_time = datetime.now().strftime(config('date_format'))
+    current_time = datetime.now().strftime(config.get('date_format'))
     backup_filename = f"{db_name}_Backup_{current_time}.sql"
-    backup_path = os.path.join(config.get('backup_path'), backup_filename)
+    backup_path = os.path.join(db_backup_dir, backup_filename)
 
     # MySQLDump Command for every own Database
     dump_cmd = [
         config.get('mysql_dump_exe_path'),
-        '-h', config.get('hostname'),
-        '-u', config.get('database_user'),
-        f'--password={config.get('database_password')}',
+        '-h', decrypt(config.get('hostname')),
+        '-u', decrypt(config.get('database_user')),
+        f'--password={decrypt(config.get('database_password'))}',
         db_name
     ]
 
