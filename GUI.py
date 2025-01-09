@@ -21,7 +21,7 @@ from py.functions import translate
 from py.functions import save_config
 from py.functions import get_databases
 
-checkbox_vars = {}
+switch_vars = {}
 
 # Gets the curent Script Path and store it in a Variable
 script_dir = os.path.dirname(__file__)
@@ -48,11 +48,13 @@ def save_settings():
 
     # Databases
     config['databases'] = {}
-    for db, var in checkbox_vars.items():
+
+    for db, var in switch_vars.items():
         config['databases'][db] = var.get()
 
+
     # Encryption
-    config['use_encryption'] = use_encryption_checkbox_var.get()
+    config['use_encryption'] = use_encryption_switch_var.get()
     config['encryption_password'] = encrypt(encryption_password_entry.get())
 
     # Theme
@@ -96,12 +98,12 @@ def fill_in_values():
 
     # Databases
     for db, value in config['databases'].items():
-        if db in checkbox_vars: 
-            checkbox_vars[db].set(value) 
+        if db in switch_vars:
+            switch_vars[db].set(value) 
 
     # Encryption
-    use_encryption_checkbox_var.set(config.get('use_encryption'))
-    
+    use_encryption_switch_var.set(config.get('use_encryption'))
+
     encryption_password_entry.delete(0, customtkinter.END)
     encryption_password_entry.insert(0, decrypt(config.get('encryption_password')))
 
@@ -125,13 +127,14 @@ def select_mysql_dump_exe_dir():
 
 # Function to Select All Databases
 def select_all_databases():
-    for db, var in checkbox_vars.items():
+    for db, var in switch_vars.items():
         var.set(True)
 
 # Function to Unselect All Databases
 def unselect_all_databases():
-    for db, var in checkbox_vars.items():
+    for db, var in switch_vars.items():
         var.set(False)
+
 
 # Save the Config and Translation in Varaibles
 config = load_config()
@@ -269,10 +272,10 @@ for idx, db in enumerate(databases):
     label.grid(row=idx, column=0, padx=10, pady=5, sticky="w")
 
     var = customtkinter.BooleanVar() 
-    checkbox = customtkinter.CTkCheckBox(databases_scrollable_frame, text="", variable=var)
-    checkbox.grid(row=idx, column=1, padx=150, pady=5)
+    switch = customtkinter.CTkSwitch(databases_scrollable_frame, text="", variable=var)
+    switch.grid(row=idx, column=1, padx=150, pady=5)
 
-    checkbox_vars[db] = var
+    switch_vars[db] = var
 
 # Encryption
 # Add Encryption Tab to Tabview
@@ -282,9 +285,10 @@ encryption_tab = tabView.add(translate('encryption_tab'))
 use_encryption_label = customtkinter.CTkLabel(encryption_tab, text=translate('use_encryption'))
 use_encryption_label.grid(row=1, column=0, padx=(10, 5), pady=10, sticky='w')
 
-use_encryption_checkbox_var = customtkinter.BooleanVar()
-use_encryption_checkbox = customtkinter.CTkCheckBox(encryption_tab, text="", variable=use_encryption_checkbox_var)
-use_encryption_checkbox.grid(row=1, column=1, padx=10, pady=5)
+use_encryption_switch_var = customtkinter.BooleanVar()
+use_encryption_switch = customtkinter.CTkSwitch(encryption_tab, text="", variable=use_encryption_switch_var)
+use_encryption_switch.grid(row=1, column=1, padx=10, pady=5)
+
 
 # Encryption Password Input
 encryption_password_label = customtkinter.CTkLabel(encryption_tab, text=translate('encryption_password'))
