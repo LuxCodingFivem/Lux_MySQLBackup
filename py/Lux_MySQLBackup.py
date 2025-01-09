@@ -1,5 +1,6 @@
 """
 Lux_MySQLBackup
+
 Copyright (c) 2024 LuxCoding
 
 This script is licensed under the MIT License.
@@ -9,14 +10,14 @@ For full details, see the LICENSE file in the repository.
 import subprocess
 import os
 from datetime import datetime
-from functions import get_script_dir
 from functions import load_config
 from functions import load_language
 from functions import translate
 from functions import decrypt
+from functions import encrypt_file
 
 # Gets the curent Script Path and store it in a Variable
-script_dir = get_script_dir()
+script_dir = os.path.dirname(__file__)
 
 # Load Config and Translation
 config = load_config()
@@ -73,6 +74,10 @@ for db_name in databases:
     # Start the Backup process and write the data in the file
     with open(backup_path, 'w', encoding='utf-8') as f:
         result = subprocess.run(dump_cmd, stdout=f, stderr=subprocess.PIPE)
+
+    
+    if config.get('use_encryption') and decrypt(config.get('encryption_password')) != "":
+        encrypt_file(backup_path, backup_path, decrypt(config.get('encryption_password')))
 
     # Check for Errors:
     if result.returncode == 0:

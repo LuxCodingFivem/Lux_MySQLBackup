@@ -10,5 +10,7 @@
     "mysql_dump_exe_path": "C:/Program Files/MariaDB 11.6/bin/mysqldump.exe",
     "background_theme": "System",
     "theme_color": "Blue",
-    "databases": {}
+    "databases": {},
+    "use_encryption": false,
+    "encryption_password": ""
 }

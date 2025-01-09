@@ -1,13 +1,27 @@
+"""
+Lux_MySQLBackup
+
+Copyright (c) 2024 LuxCoding
+
+This script is licensed under the MIT License.
+For full details, see the LICENSE file in the repository.
+"""
+# Import requiered Libs
 import ctypes
 from ctypes import wintypes
 import base64
 import json
 import os
 import subprocess
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+from cryptography.hazmat.primitives.hashes import SHA256
+from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
+from cryptography.hazmat.primitives.ciphers.aead import AESGCM
+from cryptography.hazmat.primitives import padding
+from cryptography.hazmat.backends import default_backend
 
-def get_script_dir():
-    script_dir = os.path.dirname(__file__)
-    return script_dir
+# get the Script Path 
+script_dir = os.path.dirname(__file__)
 
 # Struckture for DATA_BLOB
 class DATA_BLOB(ctypes.Structure):
@@ -71,7 +85,8 @@ def decrypt(encrypted_data):
 # Function to load the Config File
 def load_config():
     try:
-        with open(os.path.join(get_script_dir(), 'settings.json'), 'r', encoding='utf-8') as f:
+        script_dir_one_back = os.path.normpath(script_dir[:-3])
+        with open(os.path.join(script_dir_one_back, 'json/settings.json'), 'r', encoding='utf-8') as f:
             config = json.load(f)
             return config
     except FileNotFoundError:
@@ -84,7 +99,8 @@ def load_config():
 # fucntion to load the Language 
 def load_language(language):
     try:
-        with open(os.path.join(get_script_dir(), 'language.json'), 'r', encoding='utf-8') as f:
+        script_dir_one_back = os.path.normpath(script_dir[:-3])
+        with open(os.path.join(script_dir_one_back, 'json/language.json'), 'r', encoding='utf-8') as f:
             data = json.load(f)  # JSON laden
             languages = list(data.keys()) 
             
@@ -116,7 +132,8 @@ def translate(key, **kwargs):
 # function to save the Confing to the Config file
 def save_config(config):
     try:
-        with open(os.path.join(get_script_dir(), 'settings.json'), "w", encoding='utf-8') as f:
+        script_dir_one_back = os.path.normpath(script_dir[:-3])
+        with open(os.path.join(script_dir_one_back, 'json/settings.json'), "w", encoding='utf-8') as f:
             json.dump(config, f, indent=4)
     except Exception as e:
         print(translate('error_by_saving_config', e=e))
@@ -142,3 +159,54 @@ def get_databases():
         return databases
     except:
         return []
+    
+# Fucnstion to Create key From Password 
+def derive_key(password, salt):
+    kdf = PBKDF2HMAC(
+        algorithm=SHA256(),
+        length=32,
+        salt=salt,
+        iterations=100000,
+        backend=default_backend()
+    )
+    return kdf.derive(password.encode())
+
+# Function to Encrypt File
+def encrypt_file(input_file, output_file, password):
+    salt = os.urandom(16)  # Generate Salt
+    key = derive_key(password, salt)
+    iv = os.urandom(16)  # Initialization vector
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
+    encryptor = cipher.encryptor()
+    padder = padding.PKCS7(algorithms.AES.block_size).padder()
+
+    # Read File and Encrypt
+    with open(input_file, 'rb') as f:
+        plaintext = f.read()
+    padded_data = padder.update(plaintext) + padder.finalize()
+    ciphertext = encryptor.update(padded_data) + encryptor.finalize()
+
+    # Writes File with Salt and IV
+    with open(output_file, 'wb') as f:
+        f.write(salt + iv + ciphertext)
+
+# Function to Decrypt file
+def decrypt_file(input_file, output_file, password):
+    with open(input_file, 'rb') as f:
+        data = f.read()
+    salt = data[:16]  # Extract Salt
+    iv = data[16:32]  # Extract IV
+    ciphertext = data[32:]  # Extract Ciphertext
+    key = derive_key(password, salt)
+
+    cipher = Cipher(algorithms.AES(key), modes.CBC(iv), backend=default_backend())
+    decryptor = cipher.decryptor()
+    unpadder = padding.PKCS7(algorithms.AES.block_size).unpadder()
+
+    # Decrypt and remove padding
+    padded_plaintext = decryptor.update(ciphertext) + decryptor.finalize()
+    plaintext = unpadder.update(padded_plaintext) + unpadder.finalize()
+
+    # Write the Decrypted File
+    with open(output_file, 'wb') as f:
+        f.write(plaintext)
