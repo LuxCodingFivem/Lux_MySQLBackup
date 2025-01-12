@@ -4,9 +4,9 @@ Simple MySQL backup with Python for Windows
 ## Installation  
 1. Download all files.  
 2. Open a terminal.  
-3. Install `CustomTkinter` and `Cryptography` by using the following command:  
+3. Install `CustomTkinter`, `Cryptography` and `PyMySQL` by using the following command:  
     ```bash
-    pip install customtkinter cryptography
+    pip install customtkinter cryptography pymysql
     ```
 
 4. Place the folders, e.g., in `C:\Backup`.  
