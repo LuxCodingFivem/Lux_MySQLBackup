@@ -1,0 +1,5 @@
+Added lib pymysql
+Added load_database and SQL function
+Rewritten the backup function
+MySQL.exe and MySQLDump.exe are no longer needed
+Removed MySQL.exe and MySQLDump.exe input from the GUI
