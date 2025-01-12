@@ -13,6 +13,7 @@ import base64
 import json
 import os
 import subprocess
+import pymysql
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 from cryptography.hazmat.primitives.hashes import SHA256
 from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
@@ -122,6 +123,40 @@ def load_language(language):
 config = load_config()
 translation, languages = load_language(config.get('language'))
 
+# Function to Load Database
+def load_database():
+    try:
+        connection = pymysql.connect(
+            host=decrypt(config.get('hostname')),
+            user=decrypt(config.get('database_user')),
+            password=decrypt(config.get('database_password')),
+            charset='utf8mb4'  
+        )
+        return connection
+    except:
+        return None
+
+# Load Database
+connection = load_database()
+
+# Function to Execute SQL
+def SQL(Database, sql):
+    try:
+        with connection.cursor() as cursor:
+            if Database != '':
+                cursor.execute(f'USE {Database}')
+
+            cursor.execute(sql)
+            result = cursor.fetchall()
+
+            if cursor.rowcount > 0:
+                return result
+            else:
+                return ()
+    except Exception as e:
+        return ()  
+
+# Function to translate
 def translate(key, **kwargs):
     text = translation.get(key, key)  
     try:
@@ -142,20 +177,12 @@ def save_config(config):
 # Funcstion to get all Databases
 def get_databases():
     try:
-        cmd = [
-            config.get('mysql_exe_path'),
-            '-h', decrypt(config.get('hostname')),
-            '-u', decrypt(config.get('database_password')),
-            f'--password={decrypt(config.get('database_password'))}',
-            '-e', 'SHOW DATABASES;'
-        ]
-        
-        result = subprocess.run(cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-        if result.returncode != 0:
-            print(translate('error_reqest_database', utf8=result.stderr.decode('utf-8')))
+        result = SQL('', 'SHOW DATABASES')
+        if not result:
+            print(translate('error_reqest_database'))
             return []
         
-        databases = result.stdout.decode('utf-8').splitlines()[1:]  
+        databases = [item[0] for item in result]
         return databases
     except:
         return []
@@ -184,11 +211,15 @@ def encrypt_file(input_file, output_file, password):
     with open(input_file, 'rb') as f:
         plaintext = f.read()
     padded_data = padder.update(plaintext) + padder.finalize()
-    ciphertext = encryptor.update(padded_data) + encryptor.finalize()
+    ciphertext = encryptor.update(padded_data)
+    final_data = encryptor.finalize()
+    ciphertext += final_data
 
     # Writes File with Salt and IV
     with open(output_file, 'wb') as f:
         f.write(salt + iv + ciphertext)
+    
+
 
 # Function to Decrypt file
 def decrypt_file(input_file, output_file, password):

@@ -15,6 +15,7 @@ from functions import load_language
 from functions import translate
 from functions import decrypt
 from functions import encrypt_file
+from functions import SQL
 
 # Gets the curent Script Path and store it in a Variable
 script_dir = os.path.dirname(__file__)
@@ -62,25 +63,33 @@ for db_name in databases:
     backup_filename = f"{db_name}_Backup_{current_time}.sql"
     backup_path = os.path.join(db_backup_dir, backup_filename)
 
-    # MySQLDump Command for every own Database
-    dump_cmd = [
-        config.get('mysql_dump_exe_path'),
-        '-h', decrypt(config.get('hostname')),
-        '-u', decrypt(config.get('database_user')),
-        f'--password={decrypt(config.get('database_password'))}',
-        db_name
-    ]
 
-    # Start the Backup process and write the data in the file
-    with open(backup_path, 'w', encoding='utf-8') as f:
-        result = subprocess.run(dump_cmd, stdout=f, stderr=subprocess.PIPE)
+    # Creates SQL file for every Database
+    with open(backup_path, 'w', encoding='utf-8') as file:
+        # CREATE DATABASE statement at the beginning of the file
+        file.write(f"CREATE DATABASE {db_name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\nUSE {db_name};\n\n")
+        
+        # Query all tables in the current database
+        tables = SQL(db_name, "SHOW TABLES")
 
+        for (table_name,) in tables:
+            # CREATE TABLE statement for each table
+            create_table_statement = SQL(db_name, f"SHOW CREATE TABLE {table_name}")
+
+            file.write(create_table_statement[0][1] + ';\n\n')
+
+            # SELECT * from each table to retrieve all data
+            rows = SQL(db_name, f"SELECT * FROM {table_name}")
+
+            # Create INSERT INTO statements for all rows of the table
+            for row in rows:
+                insert_query = f"INSERT INTO {table_name} VALUES ({', '.join(['%s' for _ in row])});"
+                file.write(insert_query % tuple(row) + '\n')
+
+            # Blank line between tables for better readability
+            file.write("\n")
+
+        print(f"Export für {db_name} abgeschlossen.")
     
     if config.get('use_encryption') and decrypt(config.get('encryption_password')) != "":
         encrypt_file(backup_path, backup_path, decrypt(config.get('encryption_password')))
-
-    # Check for Errors:
-    if result.returncode == 0:
-        print(translate('backup_successful', db_name=db_name, backup_path=backup_path))
-    else:
-        print(translate('backup_failed', db_name=db_name, utf8=result.stderr.decode('utf-8')))

@@ -38,8 +38,6 @@ def save_settings():
     config['date_format'] = date_format.get()
     config['backup_path'] = backup_dir_entry.get()
     config['backup_count'] = backup_count_entry.get()
-    config['mysql_exe_path'] = mysql_exe_entry.get()
-    config['mysql_dump_exe_path'] = mysql_dump_exe_entry.get()
 
     # Database Connection
     config['database_user'] = encrypt(database_user_entry.get())
@@ -80,12 +78,6 @@ def fill_in_values():
     backup_count_entry.delete(0, customtkinter.END)
     backup_count_entry.insert(0, config.get('backup_count'))
 
-    mysql_exe_entry.delete(0, customtkinter.END)
-    mysql_exe_entry.insert(0, config.get('mysql_exe_path'))
-
-    mysql_dump_exe_entry.delete(0, customtkinter.END)
-    mysql_dump_exe_entry.insert(0, config.get('mysql_dump_exe_path'))
-
     # Database Connection
     hostname_entry.delete(0, customtkinter.END)
     hostname_entry.insert(0, decrypt(config.get('hostname')))
@@ -112,18 +104,6 @@ def select_backup_dir():
     path = filedialog.askdirectory(initialdir="/", title=translate('choose_backup_dir')) 
     backup_dir_entry.delete(0, customtkinter.END)
     backup_dir_entry.insert(0, path)
-
-# Function to Select the MySQL.exe Path
-def select_mysql_exe_dir():
-    path = filedialog.askopenfilename(initialdir="/", title=translate('choose_mysql_exe_dir'), filetypes=(("exe files", "*.exe"),("all files", "*.*"))) 
-    mysql_exe_entry.delete(0, customtkinter.END)
-    mysql_exe_entry.insert(0, path)
-
-# Function to Select the MySQLDump.exe Path
-def select_mysql_dump_exe_dir():
-    path = filedialog.askopenfilename(initialdir="/", title=translate('choose_mysql_dump_exe_dir'), filetypes=(("exe files", "*.exe"),("all files", "*.*"))) 
-    mysql_dump_exe_entry.delete(0, customtkinter.END)
-    mysql_dump_exe_entry.insert(0, path)
 
 # Function to Select All Databases
 def select_all_databases():
@@ -193,26 +173,6 @@ backup_count_label.grid(row=3, column=0, padx=(10, 5), pady=10, sticky='w')
 
 backup_count_entry = customtkinter.CTkEntry(general_tab, width=200, height=30, border_width=2, corner_radius=10)
 backup_count_entry.grid(row=3, column=1, padx=(5, 10), pady=10, sticky='w')
-
-# MySQL.exe Path Input
-mysql_exe_label = customtkinter.CTkLabel(general_tab, text=translate('mysql_exe_path'))
-mysql_exe_label.grid(row=4, column=0, padx=(10, 5), pady=10, sticky='w')
-
-mysql_exe_entry = customtkinter.CTkEntry(general_tab, width=200, height=30, border_width=2, corner_radius=10)
-mysql_exe_entry.grid(row=4, column=1, padx=(5, 10), pady=10, sticky='w')
-
-mysql_exe_button = customtkinter.CTkButton(general_tab, text='...', width=30, command=select_mysql_exe_dir)
-mysql_exe_button.grid(row=4, column=1, padx=(210, 10), pady=10, sticky='w')
-
-# MySQLDump.exe Path Input
-mysql_dump_exe_label = customtkinter.CTkLabel(general_tab, text=translate('mysql_dump_exe_path'))
-mysql_dump_exe_label.grid(row=5, column=0, padx=(10, 5), pady=10, sticky='w')
-
-mysql_dump_exe_entry = customtkinter.CTkEntry(general_tab, width=200, height=30, border_width=2, corner_radius=10)
-mysql_dump_exe_entry.grid(row=5, column=1, padx=(5, 10), pady=10, sticky='w')
-
-mysql_dump_exe_button = customtkinter.CTkButton(general_tab, text='...', width=30, command=select_mysql_dump_exe_dir)
-mysql_dump_exe_button.grid(row=5, column=1, padx=(210, 10), pady=10, sticky='w')
 
 
 # Database Connection
