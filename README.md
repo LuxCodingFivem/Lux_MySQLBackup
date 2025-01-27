@@ -29,10 +29,6 @@ Simple MySQL backup with Python for Windows
 **Q: How can I add another language?**  
 A: Simply open the `Language.json` and copy, for example, the English part. Then rename it to your desired language and translate the texts.
 
-**Q: Where can I find `MySQL.exe` and `MySQLDump.exe`?**  
-A: If you are using MariaDB, the executables should be in the following directory:  
-`C:/Program Files/MariaDB xx.x/bin/`. For other MySQL databases, the path may be different.
-
 **Q: Why can't I select any databases?**  
 A: You need to set up the values in the "General" and "Database Connection" tabs first and hit save. After that, the GUI will reopen, and you can select your databases.
 
