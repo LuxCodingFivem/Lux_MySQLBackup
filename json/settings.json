@@ -1,14 +1,22 @@
 {
-    "hostname": "",
-    "database_user": "",
-    "database_password": "",
+    "hostname": "AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV7Fnh8C5DkiE/THQIvAP7gAAAAACAAAAAAAQZgAAAAEAACAAAADycEJn/GrmrL05qNjYHPgheijd9Z405AqRUsN1JYgZBwAAAAAOgAAAAAIAACAAAAACfjkz74XHiESk9pKZ7YsK+ANoYDihYaI4k9xb07556RAAAAAgwUruGbO+2A/Typib3GEDQAAAAPNDqcfHb9onb7sawjSpCyF8bNlzVaSs5yw8fYJi+EuloE5lH313JCxBtSlCSUZsyCQ/yah9UZHkYoajM68hanM=",
+    "database_user": "AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV7Fnh8C5DkiE/THQIvAP7gAAAAACAAAAAAAQZgAAAAEAACAAAABSNeYLnPhB5AJlWwSn0sVOOrtlEOF1pCrA5M1R0WYP1AAAAAAOgAAAAAIAACAAAAD9NNG+v+wPILdnvGYW8X686A6M0W2jFsu+ImtTLR0bfBAAAADIqEtTVu/Un/uQz98VGakRQAAAAOLqnL1O4MX9oBFmZMTIoLRchsCk6ORAl/3J344ve16EqquJFer8TiR3cvklqXuqbkNV2SKmW80fgaEsjAq5s2Y=",
+    "database_password": "AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV7Fnh8C5DkiE/THQIvAP7gAAAAACAAAAAAAQZgAAAAEAACAAAADAcD+N5brP0VV/nfi+7hd89/ZPQD1stjMeZrLGtiT8jwAAAAAOgAAAAAIAACAAAADft+V9X1whJr+YOi10H4DL++IXjm7jtxQjOfs86td0WBAAAADt8rnlSM+TnkVC5u58FfQAQAAAAME5U9fiummXy8grtVO646SBfP00vphol4rTqbe8J89knp4YMDsk4DcUYZArsTe9382BEkL3qqukRYf5J70qjcI=",
     "language": "English",
     "date_format": "%m.%d.%Y_%H.%M.%S",
-    "backup_path": "",
-    "backup_count": "",
+    "backup_path": "C:/Backup",
+    "backup_count": "123",
     "background_theme": "System",
     "theme_color": "Blue",
-    "databases": {},
+    "databases": {
+        "exactflow": true,
+        "information_schema": false,
+        "mysql": false,
+        "nlc_test": true,
+        "nlcv2": true,
+        "performance_schema": false,
+        "sys": false
+    },
     "use_encryption": false,
-    "encryption_password": ""
+    "encryption_password": "AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAV7Fnh8C5DkiE/THQIvAP7gAAAAACAAAAAAAQZgAAAAEAACAAAAD+s0/Tn9QoWjHrQSUTKLu0Cc5y6MEfCu+PTbr6rNJf7AAAAAAOgAAAAAIAACAAAADq4AY6HUAVVwz4zYajfsf4pCUJ27mEf8ZiiT/EGsUNgRAAAAA1T1wDZMZHaDP+xvIkKOcwQAAAAPUL7+METKNCVS4WrBcnqbtwoJ1wSNN+m5WQL/twIcsuM2TotCLWoccDKxirhLjVSPEa4WegAaCEQj7A7PoIEow="
 }
