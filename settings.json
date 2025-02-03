@@ -1,0 +1,14 @@
+{
+    "hostname": "",
+    "database_user": "",
+    "database_password": "",
+    "language": "English",
+    "date_format": "%m.%d.%Y_%H.%M.%S",
+    "backup_path": "C:/Backup",
+    "backup_count": "123",
+    "background_theme": "System",
+    "theme_color": "Blue",
+    "databases": {},
+    "use_encryption": false,
+    "encryption_password": ""
+}
