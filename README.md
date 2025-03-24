@@ -4,9 +4,9 @@ Simple MySQL backup with Python for Windows
 ## Installation  
 1. Download all files.  
 2. Open a terminal.  
-3. Install `CustomTkinter`, `Cryptography` and `PyMySQL` by using the following command:  
+3. Install `CustomTkinter`, `Cryptography`, `requests` and `PyMySQL` by using the following command:  
     ```bash
-    pip install customtkinter cryptography pymysql
+    pip install customtkinter cryptography pymysql requests
     ```
 
 4. Place the folders, e.g., in `C:\Backup`.  
@@ -35,11 +35,14 @@ A: You need to set up the values in the "General" and "Database Connection" tabs
 **Q: How can I decrypt an encrypted backup?**  
 A: Simply open the `Decrypt_backup_GUI.py`, insert your encryption password, select the file you want to decrypt, choose a name for the decrypted file, and select where the decrypted file should be stored.
 
+**Q: How big can a backup be to store it on Discord?**  
+A: Discord supports sending files over webhook up to a size of 10MB.
+
 ## License  
 
 MIT License  
 
-Copyright (c) 2024 LuxCoding  
+Copyright (c) 2025 LuxCoding  
 
 Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  
 
