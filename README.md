@@ -38,6 +38,9 @@ A: Simply open the `Decrypt_backup_GUI.py`, insert your encryption password, sel
 **Q: How big can a backup be to store it on Discord?**  
 A: Discord supports sending files over webhook up to a size of 10MB.
 
+## Nice to know
+1. Encrypted backups cannot be compressed very tightly 
+
 ## License  
 
 MIT License  
