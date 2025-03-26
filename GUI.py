@@ -99,6 +99,7 @@ def fill_in_values():
     toggle_send_to_discord()
 
     delete_local_backup_switch_var.set(config.get('delete_local_backup'))
+    toggle_delete_local()
 
     # Database Connection
     hostname_entry.delete(0, customtkinter.END)
@@ -117,7 +118,8 @@ def fill_in_values():
 
     # Encryption
     use_encryption_switch_var.set(config.get('use_encryption'))
-
+    lock_encryption_password_entry()
+    
     encryption_password_entry.delete(0, customtkinter.END)
     encryption_password_entry.insert(0, decrypt(config.get('encryption_password')))
 
@@ -170,6 +172,14 @@ def toggle_delete_local():
         backup_dir_entry._entry.configure(cursor="xterm")
         backup_count_entry.configure(state='normal')
         backup_count_entry._entry.configure(cursor="xterm")
+
+def lock_encryption_password_entry():
+    if use_encryption_switch_var.get():
+        encryption_password_entry.configure(state='normal')
+        encryption_password_entry._entry.configure(cursor="xterm")
+    else:
+        encryption_password_entry.configure(state='disabled')
+        encryption_password_entry._entry.configure(cursor="no")
 
 # Save the Config and Translation in Varaibles
 config = load_config()
@@ -350,7 +360,7 @@ use_encryption_label = customtkinter.CTkLabel(encryption_tab, text=translate('us
 use_encryption_label.grid(row=1, column=0, padx=(10, 5), pady=10, sticky='w')
 
 use_encryption_switch_var = customtkinter.BooleanVar()
-use_encryption_switch = customtkinter.CTkSwitch(encryption_tab, text="", variable=use_encryption_switch_var)
+use_encryption_switch = customtkinter.CTkSwitch(encryption_tab, text="", variable=use_encryption_switch_var, command=lock_encryption_password_entry)
 use_encryption_switch.grid(row=1, column=1, padx=10, pady=5)
 
 

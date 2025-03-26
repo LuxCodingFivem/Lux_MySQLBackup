@@ -58,7 +58,7 @@ try:
     for db_name in databases:
         # Create Subfolder for every Database
         if config.get('delete_local_backup'):
-            db_backup_dir = 'C:/'
+            db_backup_dir = 'C:/Backup'
         else:
             db_backup_dir = os.path.join(config.get('backup_path'), db_name)
         if not os.path.exists(db_backup_dir):
