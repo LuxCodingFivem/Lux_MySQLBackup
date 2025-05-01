@@ -145,7 +145,7 @@ def SQL(Database, sql):
     try:
         with connection.cursor() as cursor:
             if Database != '':
-                cursor.execute(f'USE {Database}')
+                cursor.execute(f'USE `{Database}`')
 
             cursor.execute(sql)
             result = cursor.fetchall()

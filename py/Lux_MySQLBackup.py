@@ -72,7 +72,7 @@ try:
         # Create SQL file for every Database
         with open(backup_path, 'w', encoding='utf-8') as file:
             # CREATE DATABASE statement at the beginning of the file
-            file.write(f"CREATE DATABASE {db_name} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\nUSE {db_name};\n\n")
+            file.write(f"CREATE DATABASE `{db_name}` CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;\nUSE `{db_name}`;\n\n")
 
             # Query all tables in the current database
             tables = SQL(db_name, "SHOW TABLES")
